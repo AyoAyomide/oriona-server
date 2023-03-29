@@ -1,5 +1,5 @@
 /**
- * This middleware save uploaded images to local with multer
+ * it save users audio file to local
  */
 import multer from 'multer';
 import mime from 'mime-types';

@@ -56,19 +56,6 @@ class TextToSpeech {
 
 export default TextToSpeech;
 
-// export default (req, res, next) => {
-//     try {
-//         new TextToSpeech(res.locals.aiResponse)
-//             .audioFile('name.mp3');
-//         audioEvent.emit('audio', "true");
-//     } catch (err) {
-//         console.log(err);
-//     }
-
-// }
-
-
-
 // new TextToSpeech(text)
 //     .audioFile('name.mp3');
 // .ffmpegCompress('output.mp3');

@@ -1,3 +1,6 @@
+/**
+ * Send the text to OpenAI and get a response
+ */
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
