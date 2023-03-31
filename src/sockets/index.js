@@ -1,10 +1,12 @@
 import EventEmitter from 'events';
 
+import { Server } from 'socket.io';
 
 export default class SocketEvent {
     constructor() {
         this.audioEvent = new EventEmitter();
     }
+
     init(server) {
         this.io = new Server(server, {
             cors: {
@@ -13,9 +15,10 @@ export default class SocketEvent {
             }
         });
     }
+
     listen() {
         this.io('connection', (socket) => {
-            console.log('user connected');
+            console.log(socket, 'user connected');
         })
     }
 }

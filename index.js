@@ -1,10 +1,11 @@
 import http from 'http';
 import express from 'express';
-import { Server } from 'socket.io';
 import cors from 'cors';
-import middleware from './src/middleware';
-import api from './src/api';
-import SocketEvent from './src/sockets';
+import middleware from './src/middleware/index.js';
+import api from './src/api/index.js';
+
+import SocketEvent from './src/sockets/index.js';
+
 const app = express();
 const server = http.createServer(app);
 
@@ -13,9 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.disable('x-powered-by');
 
 // 3rd party middleware
-app.use(cors({
-    exposedHeaders: ["links"]
-}));
+app.use(cors({ exposedHeaders: ['links'] }));
 
 // middleware
 app.use('/api', middleware());
@@ -25,6 +24,9 @@ app.use('/api', api());
 
 // socket
 new SocketEvent().init(server);
+
+const port = process.env.PORT || '3380';
+server.listen(port, () => console.log(`Access at http://localhost:${server.address().port}`));
 
 // app.post('/', fileToLocal, fileToMp3, (req, res, next) => {
 //     console.log(req.body, req.files);
@@ -94,5 +96,3 @@ new SocketEvent().init(server);
 //     }
 //     readStream.pipe(res);
 // });
-const port = process.env.PORT || '3380';
-server.listen(port, () => console.log(`Access at http://localhost:${server.address().port}`));

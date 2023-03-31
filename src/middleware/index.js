@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import { Router } from 'express';
-import { userRequest } from '../routes/path';
-import audioToLocal from './locals/audioToLocal';
-import fileToMp3 from './locals/fileToMp3';
-import fileToWhisper from './locals/fileToWhisper';
-import streamMp3 from './locals/streamMp3';
-import textToOpenAI from './locals/textToOpenAI';
+import { userRequest, aiResponse } from '../routes/path.js';
+import audioToLocal from './locals/audioToLocal.js';
+import fileToMp3 from './locals/fileToMp3.js';
+import fileToWhisper from './locals/fileToWhisper.js';
+import streamMp3 from './locals/streamMp3.js';
+import textToOpenAI from './locals/textToOpenAI.js';
 
 
 export default () => {

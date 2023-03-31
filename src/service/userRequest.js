@@ -1,9 +1,6 @@
 export default class UserRequest {
-    constructor() {
-
-    }
-    async execute() {
+    execute() {
+        this.name = "samuel";
         return "hello world";
     }
 }
-

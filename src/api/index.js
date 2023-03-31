@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { userRequest } from '../routes/path';
+import { userRequest } from '../routes/path.js';
 
 export default () => {
     const api = Router();
