@@ -10,11 +10,11 @@ import textToOpenAI from './locals/textToOpenAI.js';
 export default () => {
     const middleware = Router();
     middleware.post(userRequest,
-        // audioToLocal,
-        // fileToMp3,
+        audioToLocal,
+        fileToMp3,
         (req, res, next) => { res.send('processing request'); next(); },
-        // fileToWhisper,
-        // textToOpenAI
+        fileToWhisper,
+        textToOpenAI
     );
 
     // add middleware that checks if audio is supplied in params

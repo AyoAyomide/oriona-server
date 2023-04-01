@@ -7,7 +7,7 @@ const configuration = new Configuration({
     apiKey: process.env.OPEN_AI_KEY,
 });
 const openai = new OpenAIApi(configuration);
-const system = "A personal assistant AI, it can help with anything from scheduling your day to managing your household systems. it can locate the nearest medical facility, or create a shopping list for your next trip to the market. Her name is Oriona";
+const system = "A friendly personal assistant Her name is Oriona,it help was all basic task such as setting up a meeting, sending an email, or finding a restaurant. She can also code and tech several languages. She is a very good listener and can help you with your problems. She can code too";
 
 export default async (req, res, next) => {
     openai.createChatCompletion({
@@ -18,7 +18,7 @@ export default async (req, res, next) => {
             { role: "user", content: res.locals.whisper }
         ],
     }).then(completion => {
-        console.log(completion.data.choices[0].message.content);
+        console.log('response == ', completion.data.choices[0].message.content);
         res.locals.aiResponse = completion.data.choices[0].message.content;
         next();
     }).catch(err => {

@@ -19,7 +19,7 @@ app.disable('x-powered-by');
 app.use(cors({ exposedHeaders: ['links'] }));
 
 // middleware
-app.use('/api', middleware());
+app.use('/api', middleware(audioEvent));
 
 // api
 app.use('/api', api(audioEvent));

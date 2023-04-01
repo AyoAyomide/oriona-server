@@ -5,8 +5,8 @@ import UserResponse from '../service/userResponse.js';
 
 export default (eventEmitter) => {
     const api = Router();
-    api.post(userRequest, () => {
-        new UserRequest().execute().then((response) => {
+    api.post(userRequest, (req, res) => {
+        new UserRequest({ ...req, ...res }).execute().then((response) => {
             eventEmitter.emit('audio', response);
             console.log(response);
         }).catch((error) => {

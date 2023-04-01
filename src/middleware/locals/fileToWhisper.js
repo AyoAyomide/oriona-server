@@ -7,28 +7,30 @@ import FormData from 'form-data';
 import "dotenv/config";
 
 export default async (req, res, next) => {
-    let data = new FormData();
-    data.append('file', fs.createReadStream('tmp/blob.mp3'));
+    const data = new FormData();
+    data.append('file', fs.createReadStream(res.locals.filename));
     data.append('model', 'whisper-1');
 
-    let config = {
+    const config = {
         method: 'post',
         url: 'https://api.openai.com/v1/audio/translations',
         headers: {
-            'Authorization': `Bearer ${process.env.OPEN_AI_KEY}`,
+            'Authorization': `Bearer ${process.env.OPEN_AI_KEY} `,
             ...data.getHeaders()
         },
-        data: data
+        data
     };
 
     await axios(config)
-        .then(function (response) {
-            console.log('Whisper test passes');
+        .then((response) => {
+            fs.unlink(res.locals.filename, (err) => {
+                if (err) console.log(err);
+            });
+            console.log('request ==', response.data.text);
             res.locals.whisper = response.data.text;
             next();
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.log(error);
         });
-
 }

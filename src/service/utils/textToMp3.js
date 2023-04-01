@@ -29,33 +29,25 @@ class TextToSpeech {
             voice,
             audioConfig,
         };
-        return await this.client.synthesizeSpeech(request);
+        return this.client.synthesizeSpeech(request);
     }
 
     async audioFile(filename) {
         const [response] = await this.getSynthesize(this.text, this.voice, this.audioConfig);
         await writeFile(filename, response.audioContent, 'binary');
-        await this.ffmpegCompress(filename);
-        console.log('Audio content written to file: ' + filename);
+        this.filePath = filename;
     }
 
-    async ffmpegCompress(filename) {
-      return exec(`ffmpeg -i ${filename} -acodec libmp3lame -ab 64k _${filename}`, (err, stdout, stderr) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            console.log(stdout);
+    async ffmpegCompress(destination) {
+        return exec(`ffmpeg -y -i ${this.filePath} -acodec libmp3lame -ab 64k ${destination}`, (err, stdout) => {
+            if (err) { console.error(err); }
+            // delete the original file
+            fs.unlink(this.filePath, (error) => {
+                if (err) { console.error(error); }
+            });
         });
     }
 
 };
 
-// set google adc on shell using node exec
-// exec('export GOOGLE_APPLICATION_CREDENTIALS=key.json', () => {});
-
 export default TextToSpeech;
-
-// new TextToSpeech(text)
-//     .audioFile('name.mp3');
-// .ffmpegCompress('output.mp3');

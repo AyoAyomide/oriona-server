@@ -3,26 +3,21 @@
  */
 import multer from 'multer';
 import mime from 'mime-types';
+import sha256 from 'crypto-js/sha256.js';
 
-export default function (req, res, next) {
-    let apiResp, storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'tmp')
+export default (req, res, next) => {
+    const storage = multer.diskStorage({
+        destination(_req, file, cb) {
+            cb(null, 'src/tmp')
         },
-        filename: function (req, file, cb) {
-            let filename = file.originalname;
-            let extension = mime.extension(file.mimetype);
+        filename(_req, file, cb) {
+            const filename = sha256(JSON.stringify(`${file.originalname}_${Math.random()}`)).toString().slice(0, 10);
+            const extension = mime.extension(file.mimetype);
             cb(null, `${filename}.${extension}`);
         }
     })
 
-    let upload = multer({ storage }).array('audio');
+    const upload = multer({ storage }).array('audio');
 
-    upload(req, res, function (err) {
-        if (err) {
-            res.status(400).send('failed');
-        } else {
-            next();
-        }
-    });
+    upload(req, res, (error) => error ? res.status(400).send('error saving to audio') : next());
 }
