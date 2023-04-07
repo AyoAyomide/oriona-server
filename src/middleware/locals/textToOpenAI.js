@@ -7,7 +7,7 @@ const configuration = new Configuration({
     apiKey: process.env.OPEN_AI_KEY,
 });
 const openai = new OpenAIApi(configuration);
-const system = "A friendly personal assistant Her name is Oriona,it help was all basic task such as setting up a meeting, sending an email, or finding a restaurant. She can also code and tech several languages. She is a very good listener and can help you with your problems. She can code too";
+const system = process.env.PROMPT;
 
 export default async (req, res, next) => {
     openai.createChatCompletion({
