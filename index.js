@@ -27,5 +27,5 @@ app.use('/api', api(audioEvent));
 // socket
 SocketHandler(server, audioEvent);
 
-const port = process.env.PORT || '3380';
+const port = process.env.PORT || '8080';
 server.listen(port, () => console.log(`Access at http://localhost:${server.address().port}`));
