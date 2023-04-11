@@ -34,6 +34,7 @@ class TextToSpeech {
 
     async audioFile(filename) {
         const [response] = await this.getSynthesize(this.text, this.voice, this.audioConfig);
+        console.log('audio == fetched');
         await writeFile(filename, response.audioContent, 'binary');
         this.filePath = filename;
     }
@@ -45,6 +46,8 @@ class TextToSpeech {
             fs.unlink(this.filePath, (error) => {
                 if (err) { console.error(error); }
             });
+
+            console.log('audio == compressed');
         });
     }
 
